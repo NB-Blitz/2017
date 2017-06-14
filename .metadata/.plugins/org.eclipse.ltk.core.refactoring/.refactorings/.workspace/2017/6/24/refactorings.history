@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;Arcade Drive&apos; to &apos;Steamworks&apos;" description="Rename resource &apos;Arcade Drive&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/Arcade Drive" name="Steamworks" stamp="1497401563274" updateReferences="true"/>
+</session>
