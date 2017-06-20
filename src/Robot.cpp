@@ -18,6 +18,8 @@ class Robot: public SampleRobot
 	Timer *step3Timer;
 	//Relay spike;
 
+	/* Adding a comment here */
+
 public:
 	Robot() : //Declare Object Ports
 		inputMan(),
