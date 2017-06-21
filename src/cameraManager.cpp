@@ -13,5 +13,3 @@ double FRC::cameraManager::getDistFromCenter()
 {
 	return SmartDashboard::GetNumber("CENTER", -1) - 240;
 }
-
-/* Change this file too */
