@@ -9,6 +9,7 @@
 class Robot: public SampleRobot
 {
 	//Object Declarations
+	//Commit Testing
 	FRC::inputManager inputMan;
 	FRC::driveManager driveMan;
 	FRC::manipulator manipulator;
