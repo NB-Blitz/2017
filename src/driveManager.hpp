@@ -45,7 +45,6 @@ namespace FRC
 			double ang;
 			int dir = 1;
 			double maxMagnitude;
-			double bias;
 
 			//PIcorrection
 			int EncoderFreq[4];
