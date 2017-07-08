@@ -17,7 +17,6 @@ class Robot: public SampleRobot
 	FRC::hardwareManager hardwareMan;
 	Timer *step3Timer;
 	//Relay spike;
-	//Hello
 
 public:
 	Robot() : //Declare Object Ports
