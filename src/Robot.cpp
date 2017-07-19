@@ -596,7 +596,8 @@ public:
 			hardwareMan.displayValues();
 
 			//Encoders
-			/*SmartDashboard::PutNumber("Left Front Enc Pos", driveMan.leftFrontM.GetEncPosition());
+			/*
+			SmartDashboard::PutNumber("Left Front Enc Pos", driveMan.leftFrontM.GetEncPosition());
 			SmartDashboard::PutNumber("Left Back Enc Pos", driveMan.leftBackM.GetEncPosition());
 			SmartDashboard::PutNumber("Right Front Enc Pos", driveMan.rightFrontM.GetEncPosition());
 			SmartDashboard::PutNumber("Right Back Enc Pos", driveMan.rightBackM.GetEncPosition());
@@ -617,7 +618,7 @@ public:
 			SmartDashboard::PutNumber("Manipulator Pot", manipulator.pot.GetValue());
 			SmartDashboard::PutNumber("Climber Motor 1", manipulator.PDP.GetCurrent(0));
 			SmartDashboard::PutNumber("Climber Motor 2", manipulator.PDP.GetCurrent(1));
-*/
+			/**/
 			Wait(0.005);
 		}
 	}
