@@ -269,14 +269,14 @@ public:
 					{
 						driveMan.mecanumDrive(0, 0, 0, true);
 						gearCounter = 0;
-						if (autoMan.Auto.GetRawButton(4)) //If 4 is on
-						{
+						/*if (autoMan.Auto.GetRawButton(4)) //If 4 is on
+						{*/
 							step = 3; //Use the camera code
-						}
+						/*}
 						else //If 4 is off
 						{
 							step = 4; //Don't use the camera code
-						}
+						}*/
 					}
 				}
 

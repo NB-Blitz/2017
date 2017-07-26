@@ -87,7 +87,7 @@ void FRC::autoManager::centerWithTape(double angle, int pixelThreshold, double d
 			speed = .3;
 		}
 		//driveManager.mecanumDrive(-.35, 0, 0, true);
-		driveManager.straightDrive(targetAng, 0, -.2);
+		driveManager.straightDrive(targetAng, 0, -.5);
 	}
 	else if (distFromCenter < -pixelThreshold)
 	{
@@ -96,6 +96,6 @@ void FRC::autoManager::centerWithTape(double angle, int pixelThreshold, double d
 			speed = -.3;
 		}
 		//driveManager.mecanumDrive(.35, 0, 0, true);
-		driveManager.straightDrive(targetAng, 0, .2);
+		driveManager.straightDrive(targetAng, 0, .5);
 	}
 }
