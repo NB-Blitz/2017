@@ -137,7 +137,7 @@ void FRC::driveManager::ramp()
 //Perform mecanum drive with joystick input
 void FRC::driveManager::mecanumDrive(double y, double x, double rotate, bool bypass)
 {
-	double const Pow = .5;
+	double const Pow = 1;
 
 	if(fabs(rotate) < .1)
 	{
