@@ -23,6 +23,25 @@ FRC::autoManager::autoManager(): //Declare Object Ports
 
 }
 
+
+//Use Center Autonomous Function
+void FRC::autoManager::centerAuto()
+{
+
+}
+
+//Use Right Autonomous Function
+void FRC::autoManager::rightAuto()
+{
+
+}
+
+//Use Left Autonomous Function
+void FRC::autoManager::leftAuto()
+{
+
+}
+
 //Get the average distance of the encoders
 double FRC::autoManager::getEncDistance(bool clear)
 {
@@ -31,10 +50,12 @@ double FRC::autoManager::getEncDistance(bool clear)
 	double rightFront = 0;
 	double rightBack = 0;
 
-	if (clear == true){
+	if (clear == true)
+	{
 		driveManager.resetEnc();
 	}
-	else {
+	else
+	{
 		leftFront = ((driveManager.leftFrontM.GetEncPosition()/3024)* 2.0943951024);
 		leftBack = ((driveManager.leftBackM.GetEncPosition()/3024)* 2.0943951024);
 		rightFront = -((driveManager.rightFrontM.GetEncPosition()/3024)* 2.0943951024);

@@ -19,7 +19,8 @@ class Robot: public SampleRobot
 	Relay spike;
 
 public:
-	Robot() : //Declare Object Ports
+	Robot() :
+		//Declare Object Ports
 		inputMan(),
 		driveMan(),
 		manipulator(),
@@ -27,13 +28,15 @@ public:
 		lidarMan(),
 		hardwareMan(),
 		spike(0)
-{
-		step3Timer = new Timer();
-}
-	/*-----------------------------------------------------------------------------------------------
-	 * AUTONOMOUS
-	 *----------------------------------------------------------------------------------------------*/
-	void Autonomous(){
+		{
+			step3Timer = new Timer();
+		}
+
+	/*-----------------------------------------------------------------------------------------------*/
+	/*-----------------------------------------AUTONOMOUS--------------------------------------------*/
+	/*-----------------------------------------------------------------------------------------------*/
+	void Autonomous()
+	{
 		visionInit();
 
 		int step = 1;
@@ -104,12 +107,14 @@ public:
 			Angle = driveMan.getAngle();
 			lidarDistance = lidarMan.getLidDistance();
 
-			/*if (firstCall == false && secondCall == true){
+			/*
+			if (firstCall == false && secondCall == true){
 				secondEncDistance = autoMan.getEncDistance(false);
 				SmartDashboard::PutNumber("second dist", secondEncDistance);
 
 				secondCall = false;
-			}*/
+			}
+			/**/
 
 			/*
 			SmartDashboard::PutBoolean("firstCall", firstCall);
@@ -118,7 +123,8 @@ public:
 				SmartDashboard::PutNumber("first dist", firstEncDistance);
 
 				firstCall = false;
-			}*/
+			}
+			/**/
 
 			encDistance = autoMan.getEncDistance(false); // - firstEncDistance;
 
@@ -201,7 +207,6 @@ public:
 				}
 
 				// ----------- STEP 3 -----------
-				// Place the gear, yo
 				if(step == 3)
 				{
 					driveMan.mecanumDrive(0, 0, 0, true);
@@ -457,7 +462,7 @@ public:
 			//LEDs
 			spike.Set(Relay::kForward);
 
-			// Diagnostic prints
+			//Diagnostic prints
 			//SmartDashboard::PutNumber("Left Front Enc Vel", driveMan.leftFrontM.GetEncVel());
 			//SmartDashboard::PutNumber("Left Back Enc Vel", driveMan.leftBackM.GetEncVel());
 			//SmartDashboard::PutNumber("Right Front Enc Vel", driveMan.rightFrontM.GetEncVel());
@@ -572,7 +577,8 @@ public:
 	/*-----------------------------------------------------------------------------------------------
 	 * TEST
 	 *----------------------------------------------------------------------------------------------*/
-	void Test() {
+	void Test()
+	{
 		hardwareMan.LFEncStatus = false;
 		hardwareMan.LBEncStatus = false;
 		hardwareMan.RFEncStatus = false;
@@ -657,15 +663,11 @@ public:
 			{
 				manipulator.GearOut(0);
 			}
-
 			hardwareMan.displayValues();
 
-
+			/*
 			//Encoders
-
-
-
-			/*SmartDashboard::PutNumber("Left Front Enc Pos", driveMan.leftFrontM.GetEncPosition());
+			SmartDashboard::PutNumber("Left Front Enc Pos", driveMan.leftFrontM.GetEncPosition());
 			SmartDashboard::PutNumber("Left Back Enc Pos", driveMan.leftBackM.GetEncPosition());
 			SmartDashboard::PutNumber("Right Front Enc Pos", driveMan.rightFrontM.GetEncPosition());
 			SmartDashboard::PutNumber("Right Back Enc Pos", driveMan.rightBackM.GetEncPosition());
@@ -686,7 +688,8 @@ public:
 			SmartDashboard::PutNumber("Manipulator Pot", manipulator.pot.GetValue());
 			SmartDashboard::PutNumber("Climber Motor 1", manipulator.PDP.GetCurrent(0));
 			SmartDashboard::PutNumber("Climber Motor 2", manipulator.PDP.GetCurrent(1));
-			 */
+			/**/
+
 			Wait(0.005);
 		}
 	}
