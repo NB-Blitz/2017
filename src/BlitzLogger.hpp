@@ -28,10 +28,17 @@ namespace FRC
 		void close();
 
 		//Logging Functions
-		void info(char message[]);
-		void debug(char message[]);
-		void warning(char message[]);
-		void error(char message[]);
+		void info(char currentStage[], char message[]);
+		void debug(char currentStage[], char message[]);
+		void warning(char currentStage[], char message[]);
+		void error(char currentStage[], char message[]);
+		void trace(char currentStage[], char message[]);
+
+		enum stage
+		{
+			Auto = "Auto",
+			TeleOp = "TeleOp"
+		};
 	};
 }
 
