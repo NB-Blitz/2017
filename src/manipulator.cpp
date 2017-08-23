@@ -6,9 +6,7 @@ FRC::manipulator::manipulator(): //Declare Object Ports
 
 inputManager(),
 gear(5),
-ball(1),
 climbMotor(2),
-GearSwitch(0),
 pot(0)
 
 {
@@ -68,10 +66,4 @@ void FRC::manipulator::GearOut(double speed)
 	{
 		gear.Set(0);
 	}
-}
-
-//Eject all of the balls
-void FRC::manipulator::ballEject()
-{
-	ball.Set(0.7);
 }

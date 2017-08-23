@@ -21,13 +21,13 @@ void FRC::driveManager::fieldControl(double x, double y, double rotate)
 {
 	double r = sqrt(pow(x, 2) + pow(y, 2));
 
-	if(inputManager.JoyStick.GetDirectionDegrees() < 0)
+	if(inputManager.joyStick.GetDirectionDegrees() < 0)
 	{
-		delta = 360 + inputManager.JoyStick.GetDirectionDegrees();
+		delta = 360 + inputManager.joyStick.GetDirectionDegrees();
 	}
 	else
 	{
-		delta = inputManager.JoyStick.GetDirectionDegrees();
+		delta = inputManager.joyStick.GetDirectionDegrees();
 	}
 
 	delta -= Angle;
@@ -115,6 +115,13 @@ double FRC::driveManager::PICorrection(double preValue, double Enc)
 	{
 		return preValue;
 	}
+}
+
+void FRC::driveManager::resetEnc(){
+	leftFrontM.SetEncPosition(0);
+	leftBackM.SetEncPosition(0);
+	rightFrontM.SetEncPosition(0);
+	rightBackM.SetEncPosition(0);
 }
 
 void FRC::driveManager::getData()

@@ -32,6 +32,7 @@ namespace FRC
 		void straightDrive(double x, double y)
 		void mecanumDrive(double x, double y, double rotate);
 		double PICorrection(double PreValue, double Enc);
+		void resetEnc();
 		void getData();
 
 		//Variables

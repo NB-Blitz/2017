@@ -24,7 +24,9 @@ namespace FRC
 
 			//Object Declarations
 			Joystick Auto;
-			FRC::driveManager driveManager;
+			FRC::driveManager driveMan;
+			FRC::manipulator manipulator;
+			FRC::lidarManager lidarMan;
 
 			//Function Declarations
 			double getEncDistance(bool clear);
@@ -34,6 +36,19 @@ namespace FRC
 			void centerAuto();
 			void rightAuto();
 			void leftAuto();
+
+			double ENC_TARGET = 2.75;
+			int PIXEL_THRESHOLD = 3;
+			int REVERSE_TARGET = 30;
+			double ANGLE_THRESHOLD = 10;
+			double FINAL_TARGET = 350;
+
+			int autoStep = 1;
+			double encDistance = 0;
+			double timer = 0;
+			double distFromCenter = 0;
+			int reverseCounter = 0;
+			double finalDriveCounter = 0;
 	};
 }
 #endif /* SRC_AUTOMANAGER_HPP_ */
