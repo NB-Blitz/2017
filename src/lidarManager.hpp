@@ -31,6 +31,9 @@ namespace FRC
 			//Function Declarations
 			double getLidDistance();
 			double ProportionalSlowAntiDavid(double startLimit, double endLimit);
+			void getData();
+
+			double lidarDistance = 0;
 	};
 }
 #endif /* SRC_LIDARMANAGER_HPP_ */

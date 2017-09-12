@@ -50,6 +50,11 @@ double FRC::lidarManager::getLidDistance()
 
 }
 
+void FRC::lidarManager::getData()
+{
+	lidarDistance = getLidDistance();
+}
+
 //Returns Limit for Speed Input to Motor
 double FRC::lidarManager::ProportionalSlowAntiDavid(double startLimit, double endLimit)
 {

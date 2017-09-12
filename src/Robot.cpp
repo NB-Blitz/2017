@@ -15,8 +15,6 @@ class Robot: public SampleRobot
 	FRC::autoManager autoMan;
 	FRC::lidarManager lidarMan;
 	FRC::hardwareManager hardwareMan;
-	Timer *step3Timer;
-	Relay spike;
 
 public:
 	Robot() :
@@ -26,10 +24,9 @@ public:
 		manipulator(),
 		autoMan(),
 		lidarMan(),
-		hardwareMan(),
-		spike(0)
+		hardwareMan()
 		{
-			step3Timer = new Timer();
+
 		}
 
 	/*-----------------------------------------------------------------------------------------------*/
@@ -39,406 +36,33 @@ public:
 	{
 		visionInit();
 
-		int step = 1;
-
-		// ----------- Step 1 Vars -----------
-		double autoJoystick = -0.4;
-		double targetDistance = 2.75;
-		double encDistance = 0;
-
-		// ----------- Step 2 Vars -----------
-		bool angleStatus = false;
-		double prevAngle = -1;
-		double Angle = 0;
-		double targetAngle = 300; //Default: 360
-		int direction = 1;
-		double thresholdAngle2 = 3.0;
-		double rotateSpeed = 0.3;
-
-		// ----------- Step 3 Vars -----------
-		double pixelThreshold = 3;
-
-		// ----------- Step 5 Vars -----------
-		bool lidarStatus = false;
-		double lidarDistance = 0;
-		double startLimit = 1;
-		double endLimit = 0.4;
-		double controlLimit = 0;
-		double lidarMin = 1000000;
-
-		// ----------- Step 6 Vars -----------
-		int gearTarget = 20;
-		int gearCounter = 0;
-		int gearCounter2nd = 0;
-
-		// ----------- Step 7 Vars -----------
-		int reverseCounter = 0;
-		int reverseTarget = 30;
-
-		// ----------- Step 8 Vars -----------
-		double targetReturnAngle = 360.0;
-		double thresholdAngle8 = 10;
-
-		// ----------- Step 9 Vars -----------
-		int finalDriveCounter = 0;
-		int finalDriveCounterTarget = 350;
-
 		driveMan.resetEnc();
 		driveMan.ahrs.Reset();
-		encDistance = autoMan.getEncDistance(true);
-//		SmartDashboard::PutNumber("initialized dist", encDistance);
-//
-//		bool firstCall = true;
-//		double firstEncDistance = 0;
-//
-//		bool secondCall = true;
-//		double secondEncDistance = 0;
-
-		int step1Counter = 0;
 
 		while (IsAutonomous() && IsEnabled())
 		{
-
-			//LEDs
-			spike.Set(Relay::kForward);
-
 			//Get Sensor Values
-			prevAngle = Angle;
-			Angle = driveMan.getAngle();
-			lidarDistance = lidarMan.getLidDistance();
-
-			/*
-			if (firstCall == false && secondCall == true){
-				secondEncDistance = autoMan.getEncDistance(false);
-				SmartDashboard::PutNumber("second dist", secondEncDistance);
-
-				secondCall = false;
-			}
-			/**/
-
-			/*
-			SmartDashboard::PutBoolean("firstCall", firstCall);
-			if (firstCall == true){
-				firstEncDistance = autoMan.getEncDistance(false);
-				SmartDashboard::PutNumber("first dist", firstEncDistance);
-
-				firstCall = false;
-			}
-			/**/
-
-			encDistance = autoMan.getEncDistance(false); // - firstEncDistance;
+			lidarMan.getData();
+			driveMan.getData();
 
 			// Displays
-			SmartDashboard::PutNumber("AutoEnum", step);
-			SmartDashboard::PutNumber("Lidar Min", lidarMin);
-			SmartDashboard::PutNumber("Lidar", lidarDistance);
-			SmartDashboard::PutNumber("EncDistance", encDistance);
-			//SmartDashboard::PutNumber("Left Front Enc Vel", driveMan.leftFrontM.GetEncVel());
-			//SmartDashboard::PutNumber("Left Back Enc Vel", driveMan.leftBackM.GetEncVel());
-			//SmartDashboard::PutNumber("Right Front Enc Vel", driveMan.rightFrontM.GetEncVel());
-			//SmartDashboard::PutNumber("Right Back Enc Vel", driveMan.rightBackM.GetEncVel());
+			SmartDashboard::PutNumber("Lidar", lidarMan.lidarDistance);
+			SmartDashboard::PutNumber("nav Angle", driveMan.Angle);
 
-			//Angle Status
-			if(Angle != prevAngle)
+			if(autoMan.Auto.GetRawButton(1))
 			{
-				angleStatus = true;
+				autoMan.leftAuto();
 			}
-			else
+			else if(autoMan.Auto.GetRawButton(2))
 			{
-				angleStatus = false;
+				autoMan.centerAuto();
 			}
-
-			//Lidar Status
-			if(lidarDistance > 0.0)
+			else if(autoMan.Auto.GetRawButton(3))
 			{
-				lidarStatus = true;
-			}
-			else
-			{
-				lidarStatus = false;
+				autoMan.rightAuto();
 			}
 
-			SmartDashboard::PutBoolean("Lidar Status", lidarStatus);
-			SmartDashboard::PutBoolean("NavBoard Status", angleStatus);
-			SmartDashboard::PutNumber("nav Angle", driveMan.getAngle());
-
-			if(autoMan.Auto.GetRawButton(2)){
-				// ----------------------- MIDDLE SPRING AUTO --------------------------
-				// ----------- STEP 1 -----------
-				// Put up the manipulator partially
-				if (step == 1)
-				{
-					if(gearCounter < gearTarget)
-					{
-						manipulator.GearOut(0.7);
-						gearCounter = gearCounter + 1;
-					}
-					else
-					{
-						manipulator.GearOut(0.0);
-						step = 2;
-					}
-				}
-
-				// ----------- STEP 2 -----------
-				// Drive into the spring and stop
-				if(step == 2)
-				{
-					if(lidarDistance > 0.4)
-					{
-						driveMan.mecanumDrive(0, autoJoystick, 0, true);
-					}
-					else
-					{
-						// Stop moving
-						driveMan.mecanumDrive(0, 0, 0, true);
-
-						// Do we need to check again?
-						if(lidarDistance <= 0.05)
-						{
-							step = 2;
-						}
-						else
-						{
-							step = 3;
-							gearCounter2nd = 0;
-						}
-					}
-				}
-
-				// ----------- STEP 3 -----------
-				if(step == 3)
-				{
-					driveMan.mecanumDrive(0, 0, 0, true);
-
-					if(gearCounter2nd < gearTarget)
-					{
-						manipulator.GearOut(0.7);
-						gearCounter2nd = gearCounter2nd + 1;
-					}
-					else
-					{
-						manipulator.GearOut(0);
-						step = 10;
-					}
-				}
-			}
-
-			else
-			{
-				// ----------------------- LEFT OR RIGHT SPRING AUTO --------------------------
-				if(autoMan.Auto.GetRawButton(3)) //RIGHT SPRING
-				{
-					targetAngle = 300.0;
-					direction = 1; //Rotate left
-				}
-				else if (autoMan.Auto.GetRawButton(1)) //LEFT SPRING
-				{
-					targetAngle = 60.0;
-					direction = -1; //Rotate right
-				}
-
-				// ----------- STEP 1 -----------
-				// Drive forward from start
-				if(step == 1)
-				{
-					if (step1Counter <= 5){
-						driveMan.mecanumDrive(0, autoJoystick, 0, true);
-						step1Counter = step1Counter + 1;
-					}
-					else {
-						if(encDistance < targetDistance)
-						{
-							driveMan.mecanumDrive(0, autoJoystick, 0, true);
-						}
-						else if(encDistance >= targetDistance)
-						{
-							//SmartDashboard::PutNumber("Step1 end dist", encDistance);
-							driveMan.mecanumDrive(0, 0, 0, true);
-							step = 2;
-						}
-					}
-
-				}
-
-				// ----------- STEP 2 -----------
-				// Rotate to the correct angle
-				if(step == 2)
-				{
-					if((Angle > targetAngle + thresholdAngle2) || (Angle < targetAngle - thresholdAngle2))
-					{
-						SmartDashboard::PutString("Rotate?", "Yes");
-						autoMan.rotate(targetAngle, rotateSpeed, direction);
-					}
-					else
-					{
-						driveMan.mecanumDrive(0, 0, 0, true);
-						gearCounter = 0;
-						/*if (autoMan.Auto.GetRawButton(4)) //If 4 is on
-						{*/
-							step = 3; //Use the camera code
-						/*}
-						else //If 4 is off
-						{
-							step = 4; //Don't use the camera code
-						}*/
-					}
-				}
-
-
-				// ----------- STEP 3 -----------
-				// Center robot with reflective tape
-				double distFromCenter = SmartDashboard::GetNumber("CENTER", 240) - 240;
-				SmartDashboard::PutNumber("Dist from Center", distFromCenter);
-
-				if (step != 3)
-				{
-					step3Timer->Reset();
-				}
-				if(step == 3)
-				{
-					step3Timer->Start();
-					double time = step3Timer->Get();
-
-					if (time >= 1)
-					{
-						if ((distFromCenter > pixelThreshold || distFromCenter < -pixelThreshold) && time >= 8)
-						{
-							driveMan.mecanumDrive(0, 0, 0, true);
-							step = 8;
-						}
-						if (distFromCenter > pixelThreshold || distFromCenter < -pixelThreshold)
-						{
-							autoMan.centerWithTape(Angle, pixelThreshold, distFromCenter, targetAngle);
-						}
-						else
-						{
-							driveMan.mecanumDrive(0, 0, 0, true);
-							step = 4;
-						}
-					}
-				}
-
-				// ----------- STEP 4 -----------
-				// Put manipulator up partially
-				if (step == 4)
-				{
-					if(gearCounter < gearTarget)
-					{
-						manipulator.GearOut(0.7);
-						gearCounter = gearCounter + 1;
-					}
-					else
-					{
-						manipulator.gear.Set(0);
-						step = 5;
-					}
-				}
-
-				// ----------- STEP 5 -----------
-				// Drive into the spring and stop
-				if(step == 5)
-				{
-					if(lidarMin > lidarDistance && lidarDistance > 0){
-						lidarMin = lidarDistance;
-					}
-					if(lidarDistance > endLimit)
-					{
-						driveMan.mecanumDrive(0, autoJoystick, 0, true);
-					}
-					else
-					{
-						// Stop moving
-						driveMan.mecanumDrive(0, 0, 0, true);
-
-						// Do we need to check again?
-						if(lidarDistance <= 0.05)
-						{
-							step = 5;
-						}
-						else
-						{
-							step = 6;
-							gearCounter2nd = 0;
-						}
-					}
-				}
-
-				// ----------- STEP 6 -----------
-				// Place the gear, yo
-				if(step == 6)
-				{
-					driveMan.mecanumDrive(0, 0, 0, true);
-
-					if(gearCounter2nd < gearTarget)
-					{
-						manipulator.GearOut(0.7);
-						gearCounter2nd = gearCounter2nd + 1;
-					}
-					else
-					{
-						manipulator.GearOut(0);
-						step = 7;
-					}
-				}
-
-				// ----------- STEP 7 -----------
-				// Get out and position for teleop
-				if(step == 7)
-				{
-					if(reverseCounter < reverseTarget)
-					{
-						driveMan.mecanumDrive(0, 0.3, 0, true);
-						reverseCounter = reverseCounter + 1;
-					}
-					else
-					{
-						driveMan.mecanumDrive(0, 0, 0, true);
-						step = 8;
-					}
-				}
-
-				// ----------- STEP 8 -----------
-				// Return to forward angle
-				int directionReturn = -direction; // Left/Right
-
-				if(step == 8)
-				{
-					if(Angle > targetReturnAngle + thresholdAngle8 || Angle < targetReturnAngle - thresholdAngle8)
-					{
-						autoMan.rotate(targetReturnAngle, rotateSpeed, directionReturn);
-					}
-					else
-					{
-						driveMan.mecanumDrive(0, 0, 0, true);
-						step = 9;
-					}
-				}
-
-				// ----------- STEP 9 -----------
-				// Drive forward past line
-				if(step == 9)
-				{
-					finalDriveCounter = finalDriveCounter + 1;
-
-					if(finalDriveCounter < finalDriveCounterTarget)
-					{
-						driveMan.mecanumDrive(0, autoJoystick, 0, true);
-					}
-					else
-					{
-						driveMan.mecanumDrive(0, 0, 0, true);
-						step = 10;
-					}
-				}
-			}
-
-			// ----------- Wait -----------
-			if(step == 10){
-				driveMan.mecanumDrive(0, 0, 0, true);
-			}
-
-			Wait(0.015); //
+			Wait(0.05); //
 		}
 	}
 
@@ -449,79 +73,44 @@ public:
 	{
 		visionInit();
 
-		bool isPressed = false;
-		bool isPrePressed = false;
-		double CurrAngle = 0;
-		bool toggleOn = false;
-
-		driveMan.mecanumDrive(0, 0, 0, false);
+		driveMan.mecanumDrive(0, 0, 0);
 		driveMan.resetEnc();
 
 		while (IsOperatorControl() && IsEnabled())
 		{
-			//LEDs
-			spike.Set(Relay::kForward);
-
-			//Diagnostic prints
-			//SmartDashboard::PutNumber("Left Front Enc Vel", driveMan.leftFrontM.GetEncVel());
-			//SmartDashboard::PutNumber("Left Back Enc Vel", driveMan.leftBackM.GetEncVel());
-			//SmartDashboard::PutNumber("Right Front Enc Vel", driveMan.rightFrontM.GetEncVel());
-			//SmartDashboard::PutNumber("Right Back Enc Vel", driveMan.rightBackM.GetEncVel());
-
-			//SmartDashboard::PutNumber("LF Enc", (driveMan.leftFrontM.GetEncPosition()/3024)* 2.0943951024);
-			//SmartDashboard::PutNumber("LB Enc", (driveMan.leftBackM.GetEncPosition()/3024)* 2.0943951024);
-			//SmartDashboard::PutNumber("RF Enc",  -(driveMan.rightFrontM.GetEncPosition()/3024)* 2.0943951024);
-			//SmartDashboard::PutNumber("RB Enc",  -(driveMan.rightBackM.GetEncPosition()/3024)* 2.0943951024);
-
-			//Encoder Toggle
-			toggleOn = autoMan.Auto.GetRawButton(5);
-			isPressed = inputMan.JoyStick.GetRawButton(1);
-
-			if(isPressed != isPrePressed && !isPrePressed)
+			//Drive type selection
+			if(inputMan.joyStick.GetRawButton(1))
 			{
-				CurrAngle = driveMan.getAngle();
-				isPrePressed = true;
+				driveMan.straightDrive(inputMan.joyX, inputMan.joyY);
 			}
-			else if(isPressed != isPrePressed && !isPressed)
+			else if(inputMan.joyStick.GetRawButton(2))
 			{
-				isPrePressed = false;
+				driveMan.fieldControl(inputMan.joyX, inputMan.joyY, inputMan.joyZ);
 			}
-
-			driveMan.ramp();
-
-			if(inputMan.JoyStick.GetRawButton(8))
+			else if(inputMan.joyStick.GetRawButton(3))
 			{
-				driveMan.ahrs.Reset();
+				driveMan.straightDrive(0, .3);
 			}
-			else if(inputMan.JoyStick.GetRawButton(1))
+			else if(inputMan.joyStick.GetRawButton(4))
 			{
-				driveMan.straightDrive(CurrAngle, driveMan.JoyX, driveMan.JoyY);
+				driveMan.straightDrive(0, -.3);
 			}
-			else if(inputMan.JoyStick.GetRawButton(2))
-			{
-				driveMan.FieldControl(driveMan.JoyX,driveMan.JoyY,driveMan.joyRotate);
-			}
-			else if(inputMan.JoyStick.GetRawButton(3))
-			{
-				driveMan.straightDrive(CurrAngle, 0, .3);
-			}
-			else if(inputMan.JoyStick.GetRawButton(4))
-			{
-				driveMan.straightDrive(CurrAngle, 0, -.3);
-			}
-			else if(inputMan.JoyStick.GetRawButton(7))
-			{
-				autoMan.driveDistance(2, CurrAngle);
-			}
-			else if(inputMan.JoyStick.GetRawButton(11))
+			else if(inputMan.joyStick.GetRawButton(11))
 			{
 				driveMan.resetEnc();
 			}
 			else
 			{
-				CurrAngle = driveMan.getAngle();
-				driveMan.mecanumDrive(driveMan.JoyY, driveMan.JoyX, driveMan.joyRotate * .7, autoMan.Auto.GetRawButton(5));
+				driveMan.mecanumDrive(inputMan.joyX, inputMan.joyY, inputMan.joyZ * .7);
 			}
+
+
+			//Reset AHRS
+			if(inputMan.joyStick.GetRawButton(8))
+			{
+				driveMan.ahrs.Reset();
+			}
+
 
 			//Gear manipulator
 			if(inputMan.xBox.GetRawAxis(5) < -.1)
@@ -530,44 +119,15 @@ public:
 			}
 			else if(inputMan.xBox.GetRawAxis(5) > .1)
 			{
-				manipulator.GearReset(-inputMan.xBox.GetRawAxis(5));
+				manipulator.GearIn(-inputMan.xBox.GetRawAxis(5));
 			}
 			else
 			{
 				manipulator.gear.Set(0);
 			}
 
-			//Ball ejector
-			/*if(inputMan.xBox.GetRawAxis(3) > .1)
-			{
-				manipulator.ballEject();
-			}
-			else
-			{
-				manipulator.ball.Set(0);
-			}*/
-
-			//Direction control
-			if(inputMan.JoyStick.GetRawAxis(3) > 0)
-			{
-				driveMan.dir = -1;
-			}
-			else
-			{
-				driveMan.dir = 1;
-			}
-
 			//Start the climbing function
 			manipulator.climb();
-
-			//Check Hardware Status
-			//hardwareMan.hardwareStatus();
-
-			//display statuses to smart dashboard
-			//hardwareMan.displayValues();
-
-			// Original
-			//Wait(0.005);
 
 			//WPT
 			Wait(0.015);

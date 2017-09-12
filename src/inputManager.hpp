@@ -12,10 +12,14 @@ namespace FRC
 			inputManager();
 
 			//Object Declarations
-			Joystick JoyStick, xBox;
+			Joystick joyStick, xBox;
 
 			//Function Declarations
-			double joystickRadians();
+			void getData();
+
+			double joyX;
+			double joyY;
+			double joyZ;
 	};
 }
 #endif

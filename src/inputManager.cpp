@@ -4,26 +4,15 @@
 
 FRC::inputManager::inputManager(): //Declare Object Ports
 
-JoyStick(0),
+joyStick(0),
 xBox(1)
 
 {
 
 }
 
-//Get the joystick angle in radians
-double FRC::inputManager::joystickRadians()
-{
-	if (JoyStick.GetX() > 0)
-	{
-		return (atan(-JoyStick.GetY()/-JoyStick.GetX())+1.5708);
-	}
-	else if (JoyStick.GetX() < 0)
-	{
-		return (atan(-JoyStick.GetY()/-JoyStick.GetX())+2.3562);
-	}
-	else
-	{
-		return 0;
-	}
+void FRC::inputManager::getData(){
+	joyX = joyStick.GetRawAxis(0);
+	joyY = joyStick.GetRawAxis(1);
+	joyZ = joyStick.GetRawAxis(2);
 }
