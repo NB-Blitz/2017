@@ -24,30 +24,34 @@ FRC::autoManager::autoManager(): //Declare Object Ports
 
 }
 
-
 //Use Center Autonomous Function
 void FRC::autoManager::centerAuto()
 {
-
-	if(autoStep == 1){
+	if(autoStep == 1)
+	{
 		if(manipulator.pot.GetValue() < 2000){
 			manipulator.GearOut(1);
-		}else{
+		}
+		else
+		{
 			manipulator.gear.Set(0);
 			autoStep = 2;
 		}
 	}
-	if(autoStep == 2){
+	if(autoStep == 2)
+	{
 		if(lidarMan.lidarDistance > 0.4)
 		{
 			driveMan.mecanumDrive(0, .4, 0);
 		}
-		else{
+		else
+		{
 			driveMan.mecanumDrive(0, 0, 0);
 			autoStep = 3;
 		}
 	}
-	if(autoStep == 3){
+	if(autoStep == 3)
+	{
 		manipulator.GearOut(1);
 	}
 
@@ -58,7 +62,8 @@ void FRC::autoManager::rightAuto()
 {
 	distFromCenter = SmartDashboard::GetNumber("CENTER", 240) - 240;
 
-	if(autoStep == 1){
+	if(autoStep == 1)
+	{
 		if(encDistance < ENC_TARGET)
 		{
 			driveMan.mecanumDrive(0, .4, 0);
@@ -69,16 +74,22 @@ void FRC::autoManager::rightAuto()
 			autoStep = 2;
 		}
 	}
-	if(autoStep == 2){
-		if(driveMan.Angle < 300){
+	if(autoStep == 2)
+	{
+		if(driveMan.Angle < 300)
+		{
 			driveMan.mecanumDrive(0, 0, .3);
-		}else{
+		}
+		else
+		{
 			driveMan.mecanumDrive(0, 0, 0);
 		}
 	}
-	if(autoStep == 3){
+	if(autoStep == 3)
+	{
 		timer = timer + .05;
-		if(timer >= 1){
+		if(timer >= 1)
+		{
 			if ((distFromCenter > PIXEL_THRESHOLD || distFromCenter < -PIXEL_THRESHOLD) && timer >= 8)
 			{
 				driveMan.mecanumDrive(0, 0, 0);
@@ -95,33 +106,44 @@ void FRC::autoManager::rightAuto()
 			}
 		}
 	}
-	if(autoStep == 4){
-		if(manipulator.pot.GetValue() < 2000){
+	if(autoStep == 4)
+	{
+		if(manipulator.pot.GetValue() < 2000)
+		{
 			manipulator.GearOut(1);
-		}else{
+		}
+		else
+		{
 			manipulator.gear.Set(0);
 			autoStep = 5;
 		}
 	}
-	if(autoStep == 5){
+	if(autoStep == 5)
+	{
 		if(lidarMan.lidarDistance > 0.4)
 		{
 			driveMan.mecanumDrive(0, .4, 0);
 		}
-		else{
+		else
+		{
 			driveMan.mecanumDrive(0, 0, 0);
 			autoStep = 6;
 		}
 	}
-	if(autoStep == 6){
-		if(manipulator.pot.GetValue() < 3500){
+	if(autoStep == 6)
+	{
+		if(manipulator.pot.GetValue() < 3500)
+		{
 			manipulator.GearOut(1);
-		}else{
+		}
+		else
+		{
 			manipulator.gear.Set(0);
 			autoStep = 7;
 		}
 	}
-	if(autoStep == 7){
+	if(autoStep == 7)
+	{
 		if(reverseCounter < REVERSE_TARGET)
 		{
 			driveMan.mecanumDrive(0, 0.3, 0);
@@ -134,13 +156,17 @@ void FRC::autoManager::rightAuto()
 		}
 	}
 	if(autoStep == 8){
-		if(driveMan.Angle < 360){
+		if(driveMan.Angle < 360)
+		{
 			driveMan.mecanumDrive(0, 0, -.3);
-		}else{
+		}
+		else
+		{
 			driveMan.mecanumDrive(0, 0, 0);
 		}
 	}
-	if(autoStep == 9){
+	if(autoStep == 9)
+	{
 		finalDriveCounter = finalDriveCounter + 1;
 
 		if(finalDriveCounter < FINAL_TARGET)
@@ -163,7 +189,8 @@ void FRC::autoManager::leftAuto()
 {
 	distFromCenter = SmartDashboard::GetNumber("CENTER", 240) - 240;
 
-	if(autoStep == 1){
+	if(autoStep == 1)
+	{
 		if(encDistance < ENC_TARGET)
 		{
 			driveMan.mecanumDrive(0, .4, 0);
@@ -174,16 +201,22 @@ void FRC::autoManager::leftAuto()
 			autoStep = 2;
 		}
 	}
-	if(autoStep == 2){
-		if(driveMan.Angle < 60){
+	if(autoStep == 2)
+	{
+		if(driveMan.Angle < 60)
+		{
 			driveMan.mecanumDrive(0, 0, -.3);
-		}else{
+		}
+		else
+		{
 			driveMan.mecanumDrive(0, 0, 0);
 		}
 	}
-	if(autoStep == 3){
+	if(autoStep == 3)
+	{
 		timer = timer + .05;
-		if(timer >= 1){
+		if(timer >= 1)
+		{
 			if ((distFromCenter > PIXEL_THRESHOLD || distFromCenter < -PIXEL_THRESHOLD) && timer >= 8)
 			{
 				driveMan.mecanumDrive(0, 0, 0);
@@ -201,32 +234,42 @@ void FRC::autoManager::leftAuto()
 		}
 	}
 	if(autoStep == 4){
-		if(manipulator.pot.GetValue() < 2000){
+		if(manipulator.pot.GetValue() < 2000)
+		{
 			manipulator.GearOut(1);
-		}else{
+		}
+		else
+		{
 			manipulator.gear.Set(0);
 			autoStep = 5;
 		}
 	}
-	if(autoStep == 5){
+	if(autoStep == 5)
+	{
 		if(lidarMan.lidarDistance > 0.4)
 		{
 			driveMan.mecanumDrive(0, .4, 0);
 		}
-		else{
+		else
+		{
 			driveMan.mecanumDrive(0, 0, 0);
 			autoStep = 6;
 		}
 	}
-	if(autoStep == 6){
-		if(manipulator.pot.GetValue() < 3500){
+	if(autoStep == 6)
+	{
+		if(manipulator.pot.GetValue() < 3500)
+		{
 			manipulator.GearOut(1);
-		}else{
+		}
+		else
+		{
 			manipulator.gear.Set(0);
 			autoStep = 7;
 		}
 	}
-	if(autoStep == 7){
+	if(autoStep == 7)
+	{
 		if(reverseCounter < REVERSE_TARGET)
 		{
 			driveMan.mecanumDrive(0, 0.3, 0);
@@ -238,14 +281,19 @@ void FRC::autoManager::leftAuto()
 			autoStep = 8;
 		}
 	}
-	if(autoStep == 8){
-		if(driveMan.Angle < 360){
+	if(autoStep == 8)
+	{
+		if(driveMan.Angle < 360)
+		{
 			driveMan.mecanumDrive(0, 0, .3);
-		}else{
+		}
+		else
+		{
 			driveMan.mecanumDrive(0, 0, 0);
 		}
 	}
-	if(autoStep == 9){
+	if(autoStep == 9)
+	{
 		finalDriveCounter = finalDriveCounter + 1;
 
 		if(finalDriveCounter < FINAL_TARGET)
@@ -258,7 +306,8 @@ void FRC::autoManager::leftAuto()
 			autoStep = 10;
 		}
 	}
-	if(autoStep == 10){
+	if(autoStep == 10)
+	{
 		driveMan.mecanumDrive(0, 0, 0);
 	}
 
