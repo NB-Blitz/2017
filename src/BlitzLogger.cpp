@@ -4,83 +4,82 @@
  *  Created on: Aug 5, 2017
  *      Author: Sam
  */
+#include <BlitzLogger.hpp>
+#include <iostream>
+#include <chrono>
+#include <ctime>
 
 FRC::BlitzLogger::BlitzLogger()
 {
 
 }
 
-void FRC::BlitzLogger::init(bool debugMode)
+void FRC::BlitzLogger::init(int logLevel)
 {
-	char dateTime[] = std::chrono::system_clock::now();
+	std::string dateTime;
+	dateTime = "/home/lvuser/BlitzLogger/Steamworks/";
+	dateTime.append(getTimeStamp());
+	dateTime.append(".txt");
 	logfile.open(dateTime);
-	writeDebugMessage = debugMode;;
 }
 
-void FRC::BlitzLogger::info(char currentStage[], char message[])
+std::string FRC::BlitzLogger::getTimeStamp()
 {
-	logfile << "[" << std::chrono::system_clock::now() << "]"; //writes timestamp to file
+	std::chrono::system_clock::time_point p = std::chrono::system_clock::now();
+	std::time_t t = std::chrono::system_clock::to_time_t(p);
+	std::string timeStamp = ctime(&t);
+	return timeStamp;
+}
+
+void FRC::BlitzLogger::log(std::string currentStage, std::string level, std::string message)
+{
+	std::string timeStamp = FRC::BlitzLogger::getTimeStamp();
+	logfile << "[" << &timeStamp << "]"; //writes timestamp to file
 	logfile << " "; //Separating time stamp and message type
-	logfile << "[" << currentStage << "]"; //writes timestamp to file
+	logfile << "[" << &currentStage << "]"; //writes timestamp to file
 	logfile << " "; //Separating time stamp and message type
-	logfile << "[Info]"; //Message Type
+	logfile << "[" << &level << "]"; //writes timestamp to file
 	logfile << " "; //Separating message type and message
 	logfile << message; //Writes message to file
 	logfile << "\n"; //Sets writing location to next line for next log message
 }
 
-void FRC::BlitzLogger::debug(char currentStage[], char message[])
+void FRC::BlitzLogger::error(std::string currentStage, std::string message)
 {
-	if(writeDebugMessage)
+	if(logLevel >= Error)
 	{
-		logfile << "[" << std::chrono::system_clock::now() << "]"; //writes timestamp to file
-		logfile << " "; //Separating time stamp and message type
-		logfile << "[" << currentStage << "]"; //writes timestamp to file
-		logfile << " "; //Separating time stamp and message type
-		logfile << "[Debug]"; //Message Type
-		logfile << " "; //Separating message type and message
-		logfile << message; //Writes message to file
-		logfile << "\n"; //Sets writing location to next line for next log message
+		log(currentStage, "Error", message);
 	}
 }
 
-void FRC::BlitzLogger::trace(char currentStage[], char message[])
+void FRC::BlitzLogger::warning(std::string currentStage, std::string message)
 {
-	if(writeDebugMessage)
+	if(logLevel >= Warning)
 	{
-		logfile << "[" << std::chrono::system_clock::now() << "]"; //writes timestamp to file
-		logfile << " "; //Separating time stamp and message type
-		logfile << "[" << currentStage << "]"; //writes timestamp to file
-		logfile << " "; //Separating time stamp and message type
-		logfile << "[Trace]"; //Message Type
-		logfile << " "; //Separating message type and message
-		logfile << message; //Writes message to file
-		logfile << "\n"; //Sets writing location to next line for next log message
+
 	}
 }
 
-void FRC::BlitzLogger::warning(char currentStage[], char message[])
+void FRC::BlitzLogger::info(std::string currentStage, std::string message)
 {
-	logfile << "[" << std::chrono::system_clock::now() << "]"; //writes timestamp to file
-	logfile << " "; //Separating time stamp and message type
-	logfile << "[" << currentStage << "]"; //writes timestamp to file
-	logfile << " "; //Separating time stamp and message type
-	logfile << "[Warning]"; //Message Type
-	logfile << " "; //Separating message type and message
-	logfile << message; //Writes message to file
-	logfile << "\n"; //Sets writing location to next line for next log message
+	if(logLevel >= Info)
+	{
+
+	}
 }
 
-void FRC::BlitzLogger::error(char currentStage[], char message[])
+void FRC::BlitzLogger::debug(std::string currentStage, std::string message)
 {
-	logfile << "[" << std::chrono::system_clock::now() << "]"; //writes timestamp to file
-	logfile << " "; //Separating time stamp and message type
-	logfile << "[" << currentStage << "]"; //writes timestamp to file
-	logfile << " "; //Separating time stamp and message type
-	logfile << "[Error]"; //Message Type
-	logfile << " "; //Separating message type and message
-	logfile << message; //Writes message to file
-	logfile << "\n"; //Sets writing location to next line for next log message
+	if(logLevel >= Debug)
+	{
+
+	}
 }
 
+void FRC::BlitzLogger::trace(std::string currentStage, std::string message)
+{
+	if(logLevel >= Trace)
+	{
 
+	}
+}
