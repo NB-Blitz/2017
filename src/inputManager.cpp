@@ -12,7 +12,7 @@ xBox(1)
 }
 
 void FRC::inputManager::getData(){
-	if(joyStick.GetRawAxis(0) < .1)
+	if(fabs(joyStick.GetRawAxis(0)) < .1)
 	{
 		joyX = 0;
 	}
@@ -21,7 +21,7 @@ void FRC::inputManager::getData(){
 		joyX = joyStick.GetRawAxis(0);
 	}
 
-	if(joyStick.GetRawAxis(1) < .1)
+	if(fabs(joyStick.GetRawAxis(1)) < .1)
 	{
 		joyY = 0;
 	}
@@ -30,7 +30,7 @@ void FRC::inputManager::getData(){
 		joyY = joyStick.GetRawAxis(1);
 	}
 
-	if(joyStick.GetRawAxis(2) < .1)
+	if(fabs(joyStick.GetRawAxis(2)) < .1)
 	{
 		joyZ = 0;
 	}
