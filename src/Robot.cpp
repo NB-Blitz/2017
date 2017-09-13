@@ -117,7 +117,7 @@ public:
 			}
 			else if(inputMan.xBox.GetRawAxis(5) > .1)
 			{
-				manipulator.GearIn(-inputMan.xBox.GetRawAxis(5));
+				manipulator.GearReset(-inputMan.xBox.GetRawAxis(5));
 			}
 			else
 			{
