@@ -32,6 +32,7 @@ namespace FRC
 			bool RBEncStatus = true;
 
 		private:
+
 			//previous state variables
 			double preNavX = 0;
 			double preLFEnc = 0;
