@@ -34,7 +34,6 @@ public:
 	/*-----------------------------------------------------------------------------------------------*/
 	void Autonomous()
 	{
-		visionInit();
 
 		driveMan.resetEnc();
 		driveMan.ahrs.Reset();
@@ -71,7 +70,6 @@ public:
 	 *----------------------------------------------------------------------------------------------*/
 	void OperatorControl()
 	{
-		visionInit();
 
 		driveMan.mecanumDrive(0, 0, 0);
 		driveMan.resetEnc();
@@ -148,7 +146,6 @@ public:
 
 		while (IsTest() && IsEnabled())
 		{
-			visionInit();
 
 			//Button 1 - Left Fronts
 			if (autoMan.Auto.GetRawButton(1))
@@ -225,41 +222,8 @@ public:
 			}
 			hardwareMan.displayValues();
 
-			/*
-			//Encoders
-			SmartDashboard::PutNumber("Left Front Enc Pos", driveMan.leftFrontM.GetEncPosition());
-			SmartDashboard::PutNumber("Left Back Enc Pos", driveMan.leftBackM.GetEncPosition());
-			SmartDashboard::PutNumber("Right Front Enc Pos", driveMan.rightFrontM.GetEncPosition());
-			SmartDashboard::PutNumber("Right Back Enc Pos", driveMan.rightBackM.GetEncPosition());
-
-			SmartDashboard::PutNumber("Left Front Enc Vel", driveMan.EncoderFreq[0]);
-			SmartDashboard::PutNumber("Left Back Enc Vel", driveMan.EncoderFreq[1]);
-			SmartDashboard::PutNumber("Right Front Enc Vel", driveMan.EncoderFreq[2]);
-			SmartDashboard::PutNumber("Right Back Enc Vel", driveMan.EncoderFreq[3]);
-
-			SmartDashboard::PutNumber("Avg Encoder Dis (ft)", autoMan.getEncDistance());
-
-			//Sensors
-			SmartDashboard::PutNumber("Angle", driveMan.getAngle());
-			SmartDashboard::PutNumber("Lidar Distance", lidarMan.getLidDistance());
-			//SmartDashboard::PutNumber("Control Limit", lidarMan.ProportionalSlowAntiDavid(1, .4));
-
-			//Manipulators
-			SmartDashboard::PutNumber("Manipulator Pot", manipulator.pot.GetValue());
-			SmartDashboard::PutNumber("Climber Motor 1", manipulator.PDP.GetCurrent(0));
-			SmartDashboard::PutNumber("Climber Motor 2", manipulator.PDP.GetCurrent(1));
-			/**/
-
 			Wait(0.005);
 		}
-	}
-
-	static void visionInit()
-	{
-		//cs::AxisCamera axisCamera = CameraServer::GetInstance()->AddAxisCamera("10.51.48.11");
-		//cs::UsbCamera usbCamera = CameraServer::GetInstance()->StartAutomaticCapture();
-		//axisCamera.SetResolution(480, 360);
-		//usbCamera.SetResolution(480, 270);
 	}
 };
 
