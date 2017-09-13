@@ -345,12 +345,10 @@ void FRC::autoManager::driveDistance(double distance, double angle)
 	if(distance > getEncDistance(false))
 	{
 		driveMan.mecanumDrive(0, -.3, 0);
-		//driveManager.straightDrive(angle, 0, .5);
 	}
 	else
 	{
 		driveMan.mecanumDrive(0, 0, 0);
-		//driveManager.straightDrive(angle, 0, 0);
 	}
 }
 
@@ -365,7 +363,6 @@ void FRC::autoManager::centerWithTape(double angle, int pixelThreshold, double d
 		if (speed > .3) {
 			speed = .3;
 		}
-		//driveMan.mecanumDrive(-.35, 0, 0, true);
 		driveMan.straightDrive(0, -.5);
 	}
 	else if (distFromCenter < -pixelThreshold)
@@ -374,7 +371,6 @@ void FRC::autoManager::centerWithTape(double angle, int pixelThreshold, double d
 		if (speed < -.3) {
 			speed = -.3;
 		}
-		//driveMan.mecanumDrive(.35, 0, 0, true);
 		driveMan.straightDrive(0, .5);
 	}
 }
