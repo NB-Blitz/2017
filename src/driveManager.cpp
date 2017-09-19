@@ -19,7 +19,7 @@ ahrs {SPI::Port::kMXP}
 
 void FRC::driveManager::fieldControl(double x, double y, double rotate)
 {
-	double r = sqrt(pow(x, 2) + pow(y, 2));
+	double magnitude = sqrt(pow(x, 2) + pow(y, 2));
 
 	if(inputManager.joyStick.GetDirectionDegrees() < 0)
 	{
@@ -32,8 +32,8 @@ void FRC::driveManager::fieldControl(double x, double y, double rotate)
 
 	delta -= Angle;
 
-	x = r * cos(delta * (pi/180));
-	y= r * sin(delta * (pi/180));
+	x = magnitude * cos(delta * (pi/180));
+	y = magnitude * sin(delta * (pi/180));
 
 	mecanumDrive(-y, -x, rotate);
 }
@@ -74,10 +74,10 @@ void FRC::driveManager::mecanumDrive(double x, double y, double rotate)
 
 	for (int i = 1; i < 4; i++)
 	{
-		double temp = std::fabs(BSpeed[i]);
-		if (maxMagnitude < temp)
+		double speed = std::fabs(BSpeed[i]);
+		if (maxMagnitude < speed)
 		{
-			maxMagnitude = temp;
+			maxMagnitude = speed;
 		}
 	}
 	if (maxMagnitude > 1.0)
@@ -105,7 +105,7 @@ double FRC::driveManager::PICorrection(double preValue, double Enc)
 	if(useEnc)
 	{
 		targetSpeed = preValue * (RATE_FREQUENCY/MAX_HZ);
-		currentSpeed = Enc/RATE_FREQUENCY;
+		currentSpeed = Enc / RATE_FREQUENCY;
 		error = targetSpeed - currentSpeed;
 		propOut = error * PROPORTIONAL_GAIN;
 		PIOut = targetSpeed + propOut;
@@ -117,7 +117,8 @@ double FRC::driveManager::PICorrection(double preValue, double Enc)
 	}
 }
 
-void FRC::driveManager::resetEnc(){
+void FRC::driveManager::resetEnc()
+{
 	leftFrontM.SetEncPosition(0);
 	leftBackM.SetEncPosition(0);
 	rightFrontM.SetEncPosition(0);

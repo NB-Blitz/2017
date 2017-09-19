@@ -23,11 +23,11 @@ namespace FRC
 		FRC::inputManager inputManager;
 		FRC::autoManager autoManager;
 
-		//Object Declarations
+		// Object Declarations
 		CANTalon leftBackM, leftFrontM, rightBackM, rightFrontM;
 		AHRS ahrs;
 
-		//Functions
+		// Functions
 		void fieldControl(double x, double y, double rotate);
 		void straightDrive(double x, double y)
 		void mecanumDrive(double x, double y, double rotate);
@@ -35,10 +35,10 @@ namespace FRC
 		void resetEnc();
 		void getData();
 
-		//Variables
-		double const RATE_FREQUENCY = 2000; //target Velocity
-		double const PROPORTIONAL_GAIN = 1.0; //Proportional multiplier
-		double const MAX_HZ = 2600.0; // max Hz
+		// Variables
+		double const RATE_FREQUENCY = 2000; // Target Velocity
+		double const PROPORTIONAL_GAIN = 1.0; // Proportional multiplier
+		double const MAX_HZ = 2600.0; // Max Hz
 
 		double pi = 3.14159265359;
 
@@ -46,8 +46,8 @@ namespace FRC
 		double PreAngle = 0;
 		double rotation = 0;
 
-		double BSpeed[4];	//Base Speeds
-		double FSpeed[4];	//final Speeds
+		double BSpeed[4]; // Base Speeds
+		double FSpeed[4]; // Final Speeds
 		double maxMagnitude = 0;
 
 		double targetSpeed = 0;
