@@ -53,7 +53,6 @@ void FRC::autoManager::centerAuto()
 	{
 		manipulator.GearOut(1);
 	}
-
 }
 
 //Use Right Autonomous Function
