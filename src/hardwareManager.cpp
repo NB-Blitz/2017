@@ -10,7 +10,6 @@ FRC::hardwareManager::hardwareManager():
 
 	driveManager(),
 	lidarManager()
-
 {
 
 }
@@ -18,7 +17,7 @@ FRC::hardwareManager::hardwareManager():
 void FRC::hardwareManager::hardwareStatus()
 {
 	//Check NavX board
-	curNavX = driveManager.getAngle();
+	curNavX = driveManager.Angle;
 	if(curNavX > preNavX + .1 || curNavX < preNavX - .1)
 	{
 		NavXStatus = true;
@@ -41,8 +40,8 @@ void FRC::hardwareManager::hardwareStatus()
 	}
 
 	//Check Left Front Encoder
-	curLFEnc = driveManager.EncoderFreq[0];
-	if((curLFEnc > preLFEnc + 5 || curLFEnc < preLFEnc - 5) && driveManager.speeds[0] > .1)
+	curLFEnc = driveManager.EncVal[0];
+	if((curLFEnc > preLFEnc + 5 || curLFEnc < preLFEnc - 5) && driveManager.BSpeed[0] > .1)
 	{
 		LFEncStatus = true;
 	}
@@ -53,8 +52,8 @@ void FRC::hardwareManager::hardwareStatus()
 	preLFEnc = curLFEnc;
 
 	//Check Left Front Encoder
-	curLFEnc = driveManager.EncoderFreq[1];
-	if((curLBEnc > preLBEnc + 5 || curLBEnc < preLBEnc - 5) && driveManager.speeds[1] > .1)
+	curLFEnc = driveManager.EncVal[1];
+	if((curLBEnc > preLBEnc + 5 || curLBEnc < preLBEnc - 5) && driveManager.BSpeed[1] > .1)
 	{
 		LBEncStatus = true;
 	}
@@ -65,8 +64,8 @@ void FRC::hardwareManager::hardwareStatus()
 	preLBEnc = curLBEnc;
 
 	//Check Right Front Encoder
-	curRFEnc = driveManager.EncoderFreq[2];
-	if((curRFEnc > preRFEnc + 5 || curRFEnc < preRFEnc - 5) && driveManager.speeds[2] > .1)
+	curRFEnc = driveManager.EncVal[2];
+	if((curRFEnc > preRFEnc + 5 || curRFEnc < preRFEnc - 5) && driveManager.BSpeed[2] > .1)
 	{
 		RFEncStatus = true;
 	}
@@ -77,8 +76,8 @@ void FRC::hardwareManager::hardwareStatus()
 	preRFEnc = curRFEnc;
 
 	//Check Right Back Encoder
-	curLBEnc = driveManager.EncoderFreq[3];
-	if((curRBEnc > preRBEnc + 5 || curRBEnc < preRBEnc - 5) && driveManager.speeds[3] > .1)
+	curLBEnc = driveManager.EncVal[3];
+	if((curRBEnc > preRBEnc + 5 || curRBEnc < preRBEnc - 5) && driveManager.BSpeed[3] > .1)
 	{
 		RBEncStatus = true;
 	}

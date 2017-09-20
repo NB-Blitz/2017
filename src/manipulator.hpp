@@ -16,20 +16,14 @@ namespace FRC
 			//Object Declarations
 			FRC::inputManager inputManager;
 			CANTalon gear;
-			Talon ball, climbMotor;
-			DigitalInput GearSwitch;
+			Talon climbMotor;
 			AnalogInput pot;
 			PowerDistributionPanel PDP;
 
 			//Function Declarations
 			void GearReset(double speed);
 			void GearOut(double speed);
-			void ballEject();
 			void climb();
 	};
 }
 #endif
-
-
-
-

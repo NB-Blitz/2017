@@ -33,6 +33,11 @@ double FRC::lidarManager::getLidDistance()
 	return (distCent / 100); //Converts centimeters into meters
 }
 
+void FRC::lidarManager::getData()
+{
+	lidarDistance = getLidDistance();
+}
+
 //Returns Limit for Speed Input to Motor
 double FRC::lidarManager::ProportionalSlowAntiDavid(double startLimit, double endLimit)
 {
