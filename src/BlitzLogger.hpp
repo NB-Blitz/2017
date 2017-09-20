@@ -21,17 +21,35 @@ namespace FRC
 
 		//Variables
 		std::ofstream logfile;
-		bool writeDebugMessage = false;
+		int logLevel = 0;
 
 		//Non-logging functions
-		void init(bool debugMode);
+		void init(int logLevel);
+		std::string getTimeStamp();
 		void close();
 
 		//Logging Functions
-		void info(char message[]);
-		void debug(char message[]);
-		void warning(char message[]);
-		void error(char message[]);
+		void log(std::string currentStage, std::string level, std::string message);
+		void info(std::string currentStage, std::string message);
+		void debug(std::string currentStage, std::string message);
+		void warning(std::string currentStage, std::string message);
+		void error(std::string currentStage, std::string message);
+		void trace(std::string currentStage, std::string message);
+
+		enum Stage
+		{
+			Auto = 0,
+			Tele = 1
+		};
+
+		enum LogLevel
+		{
+			Error = 0,
+			Warning = 1,
+			Info = 2,
+			Debug = 3,
+			Trace = 4
+		};
 	};
 }
 

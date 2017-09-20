@@ -31,23 +31,6 @@ double FRC::lidarManager::getLidDistance()
 
 
 	return (distCent / 100); //Converts centimeters into meters
-
-	/* OLD LIDAR CODE
-	Lydar->WriteBulk(LIDAR_ADDR, 2);
-	Lydar->WriteBulk(&LIDAR_ADDR[2], 1);
-	do
-	{
-		Lydar->ReadOnly(1, busyRead);
-		Wait(0.001);
-	}
-	while ((int)busyRead & 0x01);
-	Lydar->WriteBulk(&LIDAR_ADDR[3], 1);
-	Lydar->ReadOnly(2, readData);
-	double distCent = ((readData[0] * 265) + readData[1]);
-
-	return (distCent / 100); //Converts centimeters into meters
-	*/
-
 }
 
 void FRC::lidarManager::getData()
