@@ -56,7 +56,7 @@ void FRC::BlitzLogger::warning(std::string currentStage, std::string message)
 {
 	if(logLevel >= Warning)
 	{
-
+		log(currentStage, "Warning", message);
 	}
 }
 
@@ -64,7 +64,7 @@ void FRC::BlitzLogger::info(std::string currentStage, std::string message)
 {
 	if(logLevel >= Info)
 	{
-
+		log(currentStage, "Info", message);
 	}
 }
 
@@ -72,7 +72,7 @@ void FRC::BlitzLogger::debug(std::string currentStage, std::string message)
 {
 	if(logLevel >= Debug)
 	{
-
+		log(currentStage, "Debug", message);
 	}
 }
 
@@ -80,6 +80,6 @@ void FRC::BlitzLogger::trace(std::string currentStage, std::string message)
 {
 	if(logLevel >= Trace)
 	{
-
+		log(currentStage, "Trace", message);
 	}
 }
