@@ -55,8 +55,8 @@ namespace FRC
 		double error = 0;
 		double propOut = 0;
 		double PIOut = 0;
-		bool useEnc = true;
 
+		bool useEnc = true;
 		double EncVal[4];
 		double Angle = 0;
 	};

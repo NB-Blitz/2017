@@ -24,8 +24,8 @@ namespace FRC
 
 			//Object Declarations
 			Joystick Auto;
-			FRC::lidarManager lidarMan;
 			FRC::driveManager driveMan;
+			FRC::lidarManager lidarMan;
 			FRC::manipulator manipulator;
 
 			//Function Declarations

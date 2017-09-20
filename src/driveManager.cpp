@@ -74,11 +74,13 @@ void FRC::driveManager::mecanumDrive(double x, double y, double rotate)
 	for (int i = 1; i < 4; i++)
 	{
 		double speed = std::fabs(BSpeed[i]);
+
 		if (maxMagnitude < speed)
 		{
 			maxMagnitude = speed;
 		}
 	}
+
 	if (maxMagnitude > 1.0)
 	{
 		for (int i = 0; i < 4; i++)
