@@ -24,12 +24,12 @@ namespace FRC
 		FRC::autoManager autoManager;
 
 		// Object Declarations
-		CANTalon leftBackM, leftFrontM, rightBackM, rightFrontM;
+		CANTalon leftFrontM, leftBackM, rightFrontM, rightBackM;
 		AHRS ahrs;
 
 		// Functions
 		void fieldControl(double x, double y, double rotate);
-		void straightDrive(double x, double y)
+		void straightDrive(double x, double y);
 		void mecanumDrive(double x, double y, double rotate);
 		double PICorrection(double PreValue, double Enc);
 		void resetEnc();

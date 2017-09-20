@@ -15,11 +15,10 @@
 #include "AHRS.h"
 
 FRC::autoManager::autoManager(): //Declare Object Ports
-
 	Auto(3),
+	lidarMan(),
 	driveMan(),
-	manipulator(),
-	lidarMan()
+	manipulator()
 {
 
 }

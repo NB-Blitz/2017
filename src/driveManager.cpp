@@ -6,12 +6,11 @@
 #include "AHRS.h"
 
 FRC::driveManager::driveManager(): //Declare Object Ports
-
-leftFrontM(1),	//array Pos 0
-leftBackM(3),	//array Pos 1
-rightFrontM(2),	//array Pos 2
-rightBackM(4),	//array Pos 3
-ahrs {SPI::Port::kMXP}
+	leftFrontM(1),	//array Pos 0
+	leftBackM(3),	//array Pos 1
+	rightFrontM(2),	//array Pos 2
+	rightBackM(4),	//array Pos 3
+	ahrs {SPI::Port::kMXP}
 
 {
 

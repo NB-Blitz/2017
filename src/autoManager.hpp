@@ -9,9 +9,9 @@
 #define SRC_AUTOMANAGER_HPP_
 
 #include "WPILib.h"
-#include "inputManager.hpp"
 #include "driveManager.hpp"
-#include "cameraManager.hpp"
+#include "manipulator.hpp"
+#include "lidarManager.hpp"
 #include "CanTalon.h"
 #include "AHRS.h"
 
@@ -24,9 +24,9 @@ namespace FRC
 
 			//Object Declarations
 			Joystick Auto;
+			FRC::lidarManager lidarMan;
 			FRC::driveManager driveMan;
 			FRC::manipulator manipulator;
-			FRC::lidarManager lidarMan;
 
 			//Function Declarations
 			double getEncDistance(bool clear);
