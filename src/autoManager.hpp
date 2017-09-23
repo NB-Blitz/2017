@@ -41,7 +41,7 @@ namespace FRC
 		int PIXEL_THRESHOLD = 3;
 		int REVERSE_TARGET = 30;
 		double ANGLE_THRESHOLD = 10;
-		double FINAL_TARGET = 350;
+		double FINAL_TARGET = 200;
 
 		int autoStep = 1;
 		double encDistance = 0;

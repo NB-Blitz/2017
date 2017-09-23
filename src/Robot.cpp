@@ -25,9 +25,10 @@ public:
 		manipulator(),
 		lidarMan(),
 		hardwareMan()
-		{
 
-		}
+{
+
+}
 
 	/*-----------------------------------------------------------------------------------------------*/
 	/*-----------------------------------------AUTONOMOUS--------------------------------------------*/
@@ -77,6 +78,10 @@ public:
 
 		while (IsOperatorControl() && IsEnabled())
 		{
+			inputMan.getData();
+			driveMan.getData();
+			driveMan.useEnc = autoMan.Auto.GetRawButton(5);
+
 			//Drive type selection
 			if(inputMan.joyStick.GetRawButton(1))
 			{

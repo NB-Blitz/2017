@@ -47,7 +47,7 @@ void FRC::autoManager::centerAuto()
 			autoStep = 3;
 		}
 	}
-	if(autoStep == 3)
+	if (autoStep == 3)
 	{
 		manipulator.GearOut(1);
 	}
@@ -58,9 +58,10 @@ void FRC::autoManager::rightAuto()
 {
 	distFromCenter = SmartDashboard::GetNumber("CENTER", 240) - 240;
 
-	if(autoStep == 1)
+	// Move forward
+	if (autoStep == 1)
 	{
-		if(encDistance < ENC_TARGET)
+		if (encDistance < ENC_TARGET)
 		{
 			driveMan.mecanumDrive(0, .4, 0);
 		}
@@ -70,9 +71,11 @@ void FRC::autoManager::rightAuto()
 			autoStep = 2;
 		}
 	}
-	if(autoStep == 2)
+
+	// Turn left
+	if (autoStep == 2)
 	{
-		if(driveMan.Angle < 300)
+		if (driveMan.Angle < 300)
 		{
 			driveMan.mecanumDrive(0, 0, .3);
 		}
@@ -81,10 +84,12 @@ void FRC::autoManager::rightAuto()
 			driveMan.mecanumDrive(0, 0, 0);
 		}
 	}
-	if(autoStep == 3)
+
+	// Camera centering
+	if (autoStep == 3)
 	{
 		timer = timer + .05;
-		if(timer >= 1)
+		if (timer >= 1)
 		{
 			if ((distFromCenter > PIXEL_THRESHOLD || distFromCenter < -PIXEL_THRESHOLD) && timer >= 8)
 			{
@@ -102,9 +107,11 @@ void FRC::autoManager::rightAuto()
 			}
 		}
 	}
-	if(autoStep == 4)
+
+	// Move manipulator up slightly
+	if (autoStep == 4)
 	{
-		if(manipulator.pot.GetValue() < 2000)
+		if (manipulator.pot.GetValue() < 2000)
 		{
 			manipulator.GearOut(1);
 		}
@@ -114,9 +121,11 @@ void FRC::autoManager::rightAuto()
 			autoStep = 5;
 		}
 	}
-	if(autoStep == 5)
+
+	// Move forward to peg
+	if (autoStep == 5)
 	{
-		if(lidarMan.lidarDistance > 0.4)
+		if (lidarMan.lidarDistance > 0.4)
 		{
 			driveMan.mecanumDrive(0, .4, 0);
 		}
@@ -126,9 +135,11 @@ void FRC::autoManager::rightAuto()
 			autoStep = 6;
 		}
 	}
-	if(autoStep == 6)
+
+	// Put manipulator up rest of the way
+	if (autoStep == 6)
 	{
-		if(manipulator.pot.GetValue() < 3500)
+		if (manipulator.pot.GetValue() < 3500)
 		{
 			manipulator.GearOut(1);
 		}
@@ -138,9 +149,11 @@ void FRC::autoManager::rightAuto()
 			autoStep = 7;
 		}
 	}
-	if(autoStep == 7)
+
+	// Back up
+	if (autoStep == 7)
 	{
-		if(reverseCounter < REVERSE_TARGET)
+		if (reverseCounter < REVERSE_TARGET)
 		{
 			driveMan.mecanumDrive(0, 0.3, 0);
 			reverseCounter = reverseCounter + 1;
@@ -151,7 +164,9 @@ void FRC::autoManager::rightAuto()
 			autoStep = 8;
 		}
 	}
-	if(autoStep == 8){
+
+	// Turn right
+	if (autoStep == 8){
 		if(driveMan.Angle < 360)
 		{
 			driveMan.mecanumDrive(0, 0, -.3);
@@ -161,7 +176,9 @@ void FRC::autoManager::rightAuto()
 			driveMan.mecanumDrive(0, 0, 0);
 		}
 	}
-	if(autoStep == 9)
+
+	// Go forward
+	if (autoStep == 9)
 	{
 		finalDriveCounter = finalDriveCounter + 1;
 
@@ -175,6 +192,8 @@ void FRC::autoManager::rightAuto()
 			autoStep = 10;
 		}
 	}
+
+	// Stop
 	if(autoStep == 10){
 		driveMan.mecanumDrive(0, 0, 0);
 	}
