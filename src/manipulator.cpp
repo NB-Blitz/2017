@@ -1,6 +1,5 @@
 #include "WPILib.h"
 #include "manipulator.hpp"
-#include "inputManager.hpp"
 
 FRC::manipulator::manipulator(): //Declare Object Ports
 

@@ -17,9 +17,9 @@ namespace FRC
 			//Function Declarations
 			void getData();
 
-			double joyX;
-			double joyY;
-			double joyZ;
+			double joyX = 0;
+			double joyY = 0;
+			double joyZ = 0;
 	};
 }
 #endif

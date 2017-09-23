@@ -9,19 +9,17 @@
 #define SRC_DRIVEMANAGER_HPP_
 
 #include "WPILib.h"
-#include "CanTalon.h"
 #include "inputManager.hpp"
-#include "autoManager.hpp"
 #include "AHRS.h"
+#include "CanTalon.h"
 
 namespace FRC
 {
 	class driveManager
 	{
-	public:
+	public :
 		driveManager();
 		FRC::inputManager inputManager;
-		FRC::autoManager autoManager;
 
 		// Object Declarations
 		CANTalon leftFrontM, leftBackM, rightFrontM, rightBackM;

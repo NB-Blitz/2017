@@ -1,11 +1,9 @@
 #include "WPILib.h"
 #include "inputManager.hpp"
-#include "cmath"
 
 FRC::inputManager::inputManager(): //Declare Object Ports
-
-joyStick(0),
-xBox(1)
+	joyStick(0),
+	xBox(1)
 
 {
 

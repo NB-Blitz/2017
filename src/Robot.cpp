@@ -1,8 +1,8 @@
 #include "WPILib.h"
 #include "inputManager.hpp"
+#include "autoManager.hpp"
 #include "driveManager.hpp"
 #include "manipulator.hpp"
-#include "autoManager.hpp"
 #include "lidarManager.hpp"
 #include "hardwareManager.hpp"
 
@@ -10,9 +10,9 @@ class Robot: public SampleRobot
 {
 	//Object Declarations
 	FRC::inputManager inputMan;
+	FRC::autoManager autoMan;
 	FRC::driveManager driveMan;
 	FRC::manipulator manipulator;
-	FRC::autoManager autoMan;
 	FRC::lidarManager lidarMan;
 	FRC::hardwareManager hardwareMan;
 
@@ -20,9 +20,9 @@ public:
 	Robot() :
 		//Declare Object Ports
 		inputMan(),
+		autoMan(),
 		driveMan(),
 		manipulator(),
-		autoMan(),
 		lidarMan(),
 		hardwareMan()
 		{
@@ -43,6 +43,7 @@ public:
 			//Get Sensor Values
 			lidarMan.getData();
 			driveMan.getData();
+			driveMan.useEnc = autoMan.Auto.GetRawButton(5);
 
 			// Displays
 			SmartDashboard::PutNumber("Lidar", lidarMan.lidarDistance);

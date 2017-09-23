@@ -1,10 +1,9 @@
 #ifndef SRC_MANIPULATOR_HPP_
 #define SRC_MANIPULATOR_HPP_
 
-#include "CANTalon.h"
-#include "DigitalInput.h"
-#include "Talon.h"
+#include "WPILib.h"
 #include "inputManager.hpp"
+#include "CANTalon.h"
 
 namespace FRC
 {

@@ -1,9 +1,5 @@
 #include "WPILib.h"
 #include "driveManager.hpp"
-#include "inputManager.hpp"
-#include "autoManager.hpp"
-#include "CanTalon.h"
-#include "AHRS.h"
 
 FRC::driveManager::driveManager(): //Declare Object Ports
 	leftFrontM(1),	//array Pos 0
@@ -128,7 +124,6 @@ void FRC::driveManager::resetEnc()
 
 void FRC::driveManager::getData()
 {
-	useEnc = autoManager.Auto.GetRawButton(5);
 	Angle = ahrs.GetFusedHeading();
 	EncVal[0] = leftFrontM.GetEncVel();
 	EncVal[1] = leftBackM.GetEncVel();

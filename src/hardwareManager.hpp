@@ -8,6 +8,9 @@
 #ifndef SRC_HARDWAREMANAGER_HPP_
 #define SRC_HARDWAREMANAGER_HPP_
 
+#include "driveManager.hpp"
+#include "lidarManager.hpp"
+
 namespace FRC
 {
 	class hardwareManager

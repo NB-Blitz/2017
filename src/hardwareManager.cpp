@@ -1,13 +1,7 @@
 #include "WPILib.h"
-#include "inputManager.hpp"
-#include "driveManager.hpp"
-#include "manipulator.hpp"
-#include "autoManager.hpp"
-#include "lidarManager.hpp"
 #include "hardwareManager.hpp"
 
 FRC::hardwareManager::hardwareManager():
-
 	driveManager(),
 	lidarManager()
 {

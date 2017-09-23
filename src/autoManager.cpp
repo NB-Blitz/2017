@@ -7,18 +7,16 @@
 
 #include "WPILib.h"
 #include "autoManager.hpp"
-#include "inputManager.hpp"
-#include "driveManager.hpp"
 #include "cmath"
 #include "cstdbool"
 #include "cstdlib"
-#include "AHRS.h"
 
 FRC::autoManager::autoManager(): //Declare Object Ports
-	Auto(3),
 	driveMan(),
 	lidarMan(),
-	manipulator()
+	manipulator(),
+	Auto(3)
+
 {
 
 }
