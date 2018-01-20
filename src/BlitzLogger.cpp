@@ -14,7 +14,7 @@ FRC::BlitzLogger::BlitzLogger()
 
 }
 
-void FRC::BlitzLogger::init(int logLevel)
+void FRC::BlitzLogger::init()
 {
 	std::string dateTime;
 	dateTime = "/home/lvuser/BlitzLogger/Steamworks/";

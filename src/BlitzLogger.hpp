@@ -24,7 +24,7 @@ namespace FRC
 		int logLevel = 0;
 
 		//Non-logging functions
-		void init(int logLevel);
+		void init();
 		std::string getTimeStamp();
 		void close();
 
