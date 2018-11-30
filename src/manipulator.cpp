@@ -1,13 +1,10 @@
-#include "WPILib.h"
 #include "manipulator.hpp"
-#include "inputManager.hpp"
 
 FRC::manipulator::manipulator(): //Declare Object Ports
 
 inputManager(),
 gear(5),
-ball(1),
-climbMotor(2),
+climbMotor(6),
 GearSwitch(0),
 pot(0)
 
@@ -47,31 +44,27 @@ void FRC::manipulator::climb()
 //Bring manipulator back until it hits specified pot value
 void FRC::manipulator::GearReset(double speed)
 {
-	if(pot.GetValue() > 250)
-	{
-		gear.Set(speed * -0.4); //Change number for constraints
-	}
-	else
-	{
-		gear.Set(0);
-	}
+//	if(pot.GetValue() > 250)
+//	{
+//		gear.Set(speed * -0.4); //Change number for constraints
+//	}
+//	else
+//	{
+//		gear.Set(0);
+//	}
+	gear.Set(speed * -0.4);
 }
 
 //Bring manipulator forward until it hits specified pot value
 void FRC::manipulator::GearOut(double speed)
 {
-	if(pot.GetValue() < 3900)
-	{
-		gear.Set(speed * -0.5); //Change number for constraints
-	}
-	else
-	{
-		gear.Set(0);
-	}
-}
-
-//Eject all of the balls
-void FRC::manipulator::ballEject()
-{
-	ball.Set(0.7);
+//	if(pot.GetValue() < 3900)
+//	{
+//		gear.Set(speed * -0.5); //Change number for constraints
+//	}
+//	else
+//	{
+//		gear.Set(0);
+//	}
+	gear.Set(speed * -0.5);
 }

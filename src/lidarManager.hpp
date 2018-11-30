@@ -9,7 +9,6 @@
 #define SRC_LIDARMANAGER_HPP_
 
 #include "WPILib.h"
-#include "CANTalon.h"
 #include "math.h"
 #include "inputManager.hpp"
 #include "driveManager.hpp"

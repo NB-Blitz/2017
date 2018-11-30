@@ -9,10 +9,12 @@
 #define SRC_AUTOMANAGER_HPP_
 
 #include "WPILib.h"
+#include "cameraManager.hpp"
 #include "inputManager.hpp"
 #include "driveManager.hpp"
-#include "cameraManager.hpp"
-#include "CanTalon.h"
+#include "cmath"
+#include "cstdbool"
+#include "cstdlib"
 #include "AHRS.h"
 
 namespace FRC
