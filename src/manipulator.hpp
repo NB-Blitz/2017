@@ -1,10 +1,10 @@
 #ifndef SRC_MANIPULATOR_HPP_
 #define SRC_MANIPULATOR_HPP_
 
-#include "CANTalon.h"
+#include "WPIlib.h"
 #include "DigitalInput.h"
-#include "Talon.h"
 #include "inputManager.hpp"
+#include <ctre/Phoenix.h>
 
 namespace FRC
 {
@@ -15,8 +15,7 @@ namespace FRC
 
 			//Object Declarations
 			FRC::inputManager inputManager;
-			CANTalon gear;
-			Talon ball, climbMotor;
+			WPI_TalonSRX gear, climbMotor;
 			DigitalInput GearSwitch;
 			AnalogInput pot;
 			PowerDistributionPanel PDP;
@@ -24,7 +23,6 @@ namespace FRC
 			//Function Declarations
 			void GearReset(double speed);
 			void GearOut(double speed);
-			void ballEject();
 			void climb();
 	};
 }

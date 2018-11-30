@@ -37,7 +37,6 @@ public:
 	/*-----------------------------------------------------------------------------------------------*/
 	void Autonomous()
 	{
-		visionInit();
 
 		int step = 1;
 
@@ -86,13 +85,6 @@ public:
 		driveMan.resetEnc();
 		driveMan.ahrs.Reset();
 		encDistance = autoMan.getEncDistance(true);
-//		SmartDashboard::PutNumber("initialized dist", encDistance);
-//
-//		bool firstCall = true;
-//		double firstEncDistance = 0;
-//
-//		bool secondCall = true;
-//		double secondEncDistance = 0;
 
 		int step1Counter = 0;
 
@@ -107,25 +99,6 @@ public:
 			Angle = driveMan.getAngle();
 			lidarDistance = lidarMan.getLidDistance();
 
-			/*
-			if (firstCall == false && secondCall == true){
-				secondEncDistance = autoMan.getEncDistance(false);
-				SmartDashboard::PutNumber("second dist", secondEncDistance);
-
-				secondCall = false;
-			}
-			/**/
-
-			/*
-			SmartDashboard::PutBoolean("firstCall", firstCall);
-			if (firstCall == true){
-				firstEncDistance = autoMan.getEncDistance(false);
-				SmartDashboard::PutNumber("first dist", firstEncDistance);
-
-				firstCall = false;
-			}
-			/**/
-
 			encDistance = autoMan.getEncDistance(false); // - firstEncDistance;
 
 			// Displays
@@ -133,10 +106,6 @@ public:
 			SmartDashboard::PutNumber("Lidar Min", lidarMin);
 			SmartDashboard::PutNumber("Lidar", lidarDistance);
 			SmartDashboard::PutNumber("EncDistance", encDistance);
-			//SmartDashboard::PutNumber("Left Front Enc Vel", driveMan.leftFrontM.GetEncVel());
-			//SmartDashboard::PutNumber("Left Back Enc Vel", driveMan.leftBackM.GetEncVel());
-			//SmartDashboard::PutNumber("Right Front Enc Vel", driveMan.rightFrontM.GetEncVel());
-			//SmartDashboard::PutNumber("Right Back Enc Vel", driveMan.rightBackM.GetEncVel());
 
 			//Angle Status
 			if(Angle != prevAngle)
@@ -274,14 +243,8 @@ public:
 					{
 						driveMan.mecanumDrive(0, 0, 0, true);
 						gearCounter = 0;
-						/*if (autoMan.Auto.GetRawButton(4)) //If 4 is on
-						{*/
-							step = 3; //Use the camera code
-						/*}
-						else //If 4 is off
-						{
-							step = 4; //Don't use the camera code
-						}*/
+						step = 3; //Use the camera code
+
 					}
 				}
 
@@ -447,7 +410,6 @@ public:
 	 *----------------------------------------------------------------------------------------------*/
 	void OperatorControl()
 	{
-		visionInit();
 
 		bool isPressed = false;
 		bool isPrePressed = false;
@@ -461,17 +423,6 @@ public:
 		{
 			//LEDs
 			spike.Set(Relay::kForward);
-
-			//Diagnostic prints
-			//SmartDashboard::PutNumber("Left Front Enc Vel", driveMan.leftFrontM.GetEncVel());
-			//SmartDashboard::PutNumber("Left Back Enc Vel", driveMan.leftBackM.GetEncVel());
-			//SmartDashboard::PutNumber("Right Front Enc Vel", driveMan.rightFrontM.GetEncVel());
-			//SmartDashboard::PutNumber("Right Back Enc Vel", driveMan.rightBackM.GetEncVel());
-
-			//SmartDashboard::PutNumber("LF Enc", (driveMan.leftFrontM.GetEncPosition()/3024)* 2.0943951024);
-			//SmartDashboard::PutNumber("LB Enc", (driveMan.leftBackM.GetEncPosition()/3024)* 2.0943951024);
-			//SmartDashboard::PutNumber("RF Enc",  -(driveMan.rightFrontM.GetEncPosition()/3024)* 2.0943951024);
-			//SmartDashboard::PutNumber("RB Enc",  -(driveMan.rightBackM.GetEncPosition()/3024)* 2.0943951024);
 
 			//Encoder Toggle
 			toggleOn = autoMan.Auto.GetRawButton(5);
@@ -520,7 +471,7 @@ public:
 			else
 			{
 				CurrAngle = driveMan.getAngle();
-				driveMan.mecanumDrive(driveMan.JoyY, driveMan.JoyX, driveMan.joyRotate * .7, autoMan.Auto.GetRawButton(5));
+				driveMan.mecanumDrive(driveMan.JoyY, driveMan.JoyX, driveMan.joyRotate * .7, true);
 			}
 
 			//Gear manipulator
@@ -537,16 +488,6 @@ public:
 				manipulator.gear.Set(0);
 			}
 
-			//Ball ejector
-			/*if(inputMan.xBox.GetRawAxis(3) > .1)
-			{
-				manipulator.ballEject();
-			}
-			else
-			{
-				manipulator.ball.Set(0);
-			}*/
-
 			//Direction control
 			if(inputMan.JoyStick.GetRawAxis(3) > 0)
 			{
@@ -559,15 +500,6 @@ public:
 
 			//Start the climbing function
 			manipulator.climb();
-
-			//Check Hardware Status
-			//hardwareMan.hardwareStatus();
-
-			//display statuses to smart dashboard
-			//hardwareMan.displayValues();
-
-			// Original
-			//Wait(0.005);
 
 			//WPT
 			Wait(0.015);
@@ -588,14 +520,13 @@ public:
 
 		while (IsTest() && IsEnabled())
 		{
-			visionInit();
 
 			//Button 1 - Left Fronts
 			if (autoMan.Auto.GetRawButton(1))
 			{
 				driveMan.leftFrontM.Set(.3);
 
-				if(driveMan.leftFrontM.GetEncVel() != 0)
+				if(driveMan.leftFrontM.GetSelectedSensorVelocity() != 0)
 				{
 					hardwareMan.LFEncStatus = true;
 				}
@@ -611,7 +542,7 @@ public:
 			{
 				driveMan.leftBackM.Set(.3);
 
-				if(driveMan.leftBackM.GetEncVel() != 0)
+				if(driveMan.leftBackM.GetSelectedSensorVelocity() != 0)
 				{
 					hardwareMan.LBEncStatus = true;
 				}
@@ -627,7 +558,7 @@ public:
 			{
 				driveMan.rightFrontM.Set(.3);
 
-				if(driveMan.rightFrontM.GetEncVel() != 0)
+				if(driveMan.rightFrontM.GetSelectedSensorVelocity() != 0)
 				{
 					hardwareMan.RFEncStatus = true;
 				}
@@ -643,7 +574,7 @@ public:
 			{
 				driveMan.rightBackM.Set(.3);
 
-				if(driveMan.rightBackM.GetEncVel() != 0)
+				if(driveMan.rightBackM.GetSelectedSensorVelocity() != 0)
 				{
 					hardwareMan.RBEncStatus = true;
 				}
@@ -665,41 +596,8 @@ public:
 			}
 			hardwareMan.displayValues();
 
-			/*
-			//Encoders
-			SmartDashboard::PutNumber("Left Front Enc Pos", driveMan.leftFrontM.GetEncPosition());
-			SmartDashboard::PutNumber("Left Back Enc Pos", driveMan.leftBackM.GetEncPosition());
-			SmartDashboard::PutNumber("Right Front Enc Pos", driveMan.rightFrontM.GetEncPosition());
-			SmartDashboard::PutNumber("Right Back Enc Pos", driveMan.rightBackM.GetEncPosition());
-
-			SmartDashboard::PutNumber("Left Front Enc Vel", driveMan.EncoderFreq[0]);
-			SmartDashboard::PutNumber("Left Back Enc Vel", driveMan.EncoderFreq[1]);
-			SmartDashboard::PutNumber("Right Front Enc Vel", driveMan.EncoderFreq[2]);
-			SmartDashboard::PutNumber("Right Back Enc Vel", driveMan.EncoderFreq[3]);
-
-			SmartDashboard::PutNumber("Avg Encoder Dis (ft)", autoMan.getEncDistance());
-
-			//Sensors
-			SmartDashboard::PutNumber("Angle", driveMan.getAngle());
-			SmartDashboard::PutNumber("Lidar Distance", lidarMan.getLidDistance());
-			//SmartDashboard::PutNumber("Control Limit", lidarMan.ProportionalSlowAntiDavid(1, .4));
-
-			//Manipulators
-			SmartDashboard::PutNumber("Manipulator Pot", manipulator.pot.GetValue());
-			SmartDashboard::PutNumber("Climber Motor 1", manipulator.PDP.GetCurrent(0));
-			SmartDashboard::PutNumber("Climber Motor 2", manipulator.PDP.GetCurrent(1));
-			/**/
-
 			Wait(0.005);
 		}
-	}
-
-	static void visionInit()
-	{
-		//cs::AxisCamera axisCamera = CameraServer::GetInstance()->AddAxisCamera("10.51.48.11");
-		//cs::UsbCamera usbCamera = CameraServer::GetInstance()->StartAutomaticCapture();
-		//axisCamera.SetResolution(480, 360);
-		//usbCamera.SetResolution(480, 270);
 	}
 };
 

@@ -1,9 +1,4 @@
 #include "WPILib.h"
-#include "inputManager.hpp"
-#include "driveManager.hpp"
-#include "manipulator.hpp"
-#include "autoManager.hpp"
-#include "lidarManager.hpp"
 #include "hardwareManager.hpp"
 
 FRC::hardwareManager::hardwareManager():
@@ -101,9 +96,4 @@ void FRC::hardwareManager::displayValues()
 	SmartDashboard::PutBoolean("Left Back Encoder Status", LBEncStatus);
 	SmartDashboard::PutBoolean("Right Front Encoder Status", RFEncStatus);
 	SmartDashboard::PutBoolean("Right Back Encoder Status", RBEncStatus);
-
-	SmartDashboard::PutBoolean("Left Front Encoder Vel", driveManager.leftFrontM.GetEncVel());
-	SmartDashboard::PutBoolean("Left Back Encoder Vel", driveManager.leftBackM.GetEncVel());
-	SmartDashboard::PutBoolean("Right Front Encoder Vel", driveManager.rightFrontM.GetEncVel());
-	SmartDashboard::PutBoolean("Right Back Encoder Vel", driveManager.leftBackM.GetEncVel());
 }

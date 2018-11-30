@@ -1,18 +1,12 @@
-#include "WPILib.h"
 #include "driveManager.hpp"
-#include "inputManager.hpp"
-#include "cmath"
-#include "cstdbool"
-#include "cstdlib"
-#include "CanTalon.h"
-#include "AHRS.h"
+#include "WPILib.h"
 
 FRC::driveManager::driveManager(): //Declare Object Ports
 
-leftBackM(3),			//FIX
+leftBackM(2),			//FIX
 leftFrontM(1),			//THIS
 rightBackM(4),			//WARNING!!!
-rightFrontM(2),
+rightFrontM(3),
 ahrs {SPI::Port::kMXP},
 inputManager()
 
@@ -145,8 +139,8 @@ void FRC::driveManager::mecanumDrive(double y, double x, double rotate, bool byp
 
 		//Mecanum equation(Left side inverted)
 		speeds[0] = x + y - rotation;//Left Front
-		speeds[1] = -(-x + y + rotation); //Left Rear
-		speeds[2] = -x + y - rotation; //Right Front
+		speeds[1] = -(-x + y - rotation); //Left Rear
+		speeds[2] = -x + y + rotation; //Right Front
 		speeds[3] = -(x + y + rotation); //Right Rear
 
 		//Normalize function: keeps values proportional and below 1
@@ -178,10 +172,10 @@ void FRC::driveManager::mecanumDrive(double y, double x, double rotate, bool byp
 			//EncoderFreq[3] = -rightBackM.GetEncVel(); //Right Rear
 
 			// WPT Modified it
-			EncoderFreq[0] = -leftFrontM.GetEncVel(); //Left Front
-			EncoderFreq[1] = -leftBackM.GetEncVel(); //Left Rear
-			EncoderFreq[2] = -rightFrontM.GetEncVel(); //Right Front
-			EncoderFreq[3] = -rightBackM.GetEncVel(); //Right Rear
+			EncoderFreq[0] = -leftFrontM.GetSelectedSensorVelocity(); //Left Front
+			EncoderFreq[1] = -leftBackM.GetSelectedSensorVelocity(); //Left Rear
+			EncoderFreq[2] = -rightFrontM.GetSelectedSensorVelocity(); //Right Front
+			EncoderFreq[3] = -rightBackM.GetSelectedSensorVelocity(); //Right Rear
 
 			PIcorrection(0);
 			PIcorrection(1);
@@ -189,24 +183,24 @@ void FRC::driveManager::mecanumDrive(double y, double x, double rotate, bool byp
 			PIcorrection(3);
 
 			leftFrontM.Set(PWMout[0] * Pow);
-			leftBackM.Set(PWMout[1] * Pow);
-			rightFrontM.Set(PWMout[2] * Pow);
-			rightBackM.Set(PWMout[3] * Pow);
+			leftBackM.Set(-PWMout[1] * Pow);
+			rightFrontM.Set(-PWMout[2] * Pow);
+			rightBackM.Set(-PWMout[3] * Pow);
 		}
 		else
 		{
 			leftFrontM.Set(speeds[0] * Pow);
 			leftBackM.Set(speeds[1] * Pow);
 			rightFrontM.Set(speeds[2] * Pow);
-			rightBackM.Set(speeds[3] * Pow);
+			rightBackM.Set(-speeds[3] * Pow);
 		}
 	}
 	else
 	{
 		leftFrontM.Set((x + y + rotate) * .8);
-		leftBackM.Set(-(-x + y - rotate) * .8);
+		leftBackM.Set((-x + y + rotate) * .8);
 		rightFrontM.Set((-x + y + rotate) * .8);
-		rightBackM.Set(-(x + y - rotate) * .8);
+		rightBackM.Set(-(x + y + rotate) * .8);
 	}
 }
 
@@ -241,10 +235,10 @@ void FRC::driveManager::straightDrive(double PreAngle, double x, double y)
 //Reset encoder positions
 void FRC::driveManager::resetEnc()
 {
-	leftFrontM.SetEncPosition(0);
-	leftBackM.SetEncPosition(0);
-	rightFrontM.SetEncPosition(0);
-	rightBackM.SetEncPosition(0);
+	leftFrontM.SetSelectedSensorPosition(0);
+	leftBackM.SetSelectedSensorPosition(0);
+	rightFrontM.SetSelectedSensorPosition(0);
+	rightBackM.SetSelectedSensorPosition(0);
 }
 
 //Field-Oriented Contols
