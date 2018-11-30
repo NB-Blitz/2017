@@ -1,12 +1,11 @@
-/*
- * hardwareMaager.hpp
- *
- *  Created on: Mar 28, 2017
- *      Author: Theo
- */
-
 #ifndef SRC_HARDWAREMANAGER_HPP_
 #define SRC_HARDWAREMANAGER_HPP_
+
+#include "inputManager.hpp"
+#include "driveManager.hpp"
+#include "manipulator.hpp"
+#include "autoManager.hpp"
+#include "lidarManager.hpp"
 
 namespace FRC
 {

@@ -7,13 +7,6 @@
 
 #include "WPILib.h"
 #include "autoManager.hpp"
-#include "inputManager.hpp"
-#include "driveManager.hpp"
-#include "cmath"
-#include "cstdbool"
-#include "cstdlib"
-//#include "CanTalon.h"
-#include "AHRS.h"
 
 FRC::autoManager::autoManager(): //Declare Object Ports
 
@@ -56,10 +49,10 @@ double FRC::autoManager::getEncDistance(bool clear)
 	}
 	else
 	{
-		leftFront = ((driveManager.leftFrontM.GetEncPosition()/3024)* 2.0943951024);
-		leftBack = ((driveManager.leftBackM.GetEncPosition()/3024)* 2.0943951024);
-		rightFront = -((driveManager.rightFrontM.GetEncPosition()/3024)* 2.0943951024);
-		rightBack = -((driveManager.rightBackM.GetEncPosition()/3024)* 2.0943951024);
+		leftFront = ((driveManager.leftFrontM.GetSelectedSensorPosition()/3024)* 2.0943951024);
+		leftBack = ((driveManager.leftBackM.GetSelectedSensorPosition()/3024)* 2.0943951024);
+		rightFront = -((driveManager.rightFrontM.GetSelectedSensorPosition()/3024)* 2.0943951024);
+		rightBack = -((driveManager.rightBackM.GetSelectedSensorPosition()/3024)* 2.0943951024);
 	}
 
 
